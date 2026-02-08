@@ -26,11 +26,11 @@ class NavBarDelegate extends SliverPersistentHeaderDelegate {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _item(context, 'Home', const HomePage()),
-            _item(context, 'Diamond', const DiamondPage()),
-            _item(context, 'Gold', const GoldPage()),
-            _item(context, 'Gemstone', const GemstonePage()),
-            _item(context, 'Wedding Ring', const WeddingRingPage()),
+            _item(context, 'HOME', const HomePage()),
+            _item(context, 'DIAMOND', const DiamondPage()),
+            _item(context, 'GOLD', const GoldPage()),
+            _item(context, 'GEMSTONE', const GemstonePage()),
+            _item(context, 'WEDDING RING', const WeddingRingPage()),
           ],
         ),
       ),

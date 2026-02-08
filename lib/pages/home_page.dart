@@ -14,8 +14,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
   List<dynamic> _products = [];
   bool _isLoading = true;
+
 
   @override
   void initState() {
@@ -50,11 +52,15 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+
     final isMobile = MediaQuery.of(context).size.width < 768;
 
     final List<String> adImages = [
       'assets/advertisement/img_2.png',
     ];
+
+    final crossAxisCount = isMobile ? 2 : 4;
+    final maxItems = crossAxisCount * 2;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -94,7 +100,7 @@ class _HomePageState extends State<HomePage> {
                   );
                 }).toList(),
               ),
-              SizedBox(height: 35),
+              const SizedBox(height: 35),
 
               // Products Section
               Padding(
@@ -112,7 +118,7 @@ class _HomePageState extends State<HomePage> {
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    SizedBox(height: 20,),
+                    const SizedBox(height: 20),
                     const Text(
                       'All our designs are curated by the top gold smith',
                       style: TextStyle(
@@ -120,33 +126,35 @@ class _HomePageState extends State<HomePage> {
                         color: Colors.black54,
                         fontWeight: FontWeight.w400,
                       ),
-                      textAlign: TextAlign.center, // Center align this text
+                      textAlign: TextAlign.center,
                     ),
-                    const SizedBox(height: 30), //
+                    const SizedBox(height: 30),
 
                     _isLoading
                         ? const Center(child: CircularProgressIndicator())
                         : _products.isEmpty
                         ? const Center(child: Text('No products found'))
                         : GridView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: isMobile ? 2 : 5,
-                        crossAxisSpacing: 20,
-                        mainAxisSpacing: 20,
-                        childAspectRatio: 0.75,
-                      ),
-                      itemCount: _products.length,
-                      itemBuilder: (context, index) {
-                        final product = _products[index];
-                        final imageUrl = product['image']?['url'] ?? 'https://via.placeholder.com/150';
+              shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: crossAxisCount,
+                  crossAxisSpacing: 20,
+                  mainAxisSpacing: 50,
+                  childAspectRatio: 0.85,
+                ),
+                itemCount: _products.length > maxItems
+                    ? maxItems
+                    : _products.length,
+                itemBuilder: (context, index) {
+                  final product = _products[index];
+                        final imageUrl = product['image']?['url'] ??
+                            'https://via.placeholder.com/150';
                         final title = product['title'] ?? '';
                         final price = product['price'] ?? 0;
 
                         return InkWell(
                           onTap: () {
-                            // Navigate to product details page
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -155,7 +163,6 @@ class _HomePageState extends State<HomePage> {
                             );
                           },
                           child: Container(
-                            alignment: Alignment.center,
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(8),
@@ -168,30 +175,67 @@ class _HomePageState extends State<HomePage> {
                               ],
                             ),
                             child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
+                                // Image with overlay text
                                 Expanded(
-                                  child: ClipRRect(
-                                    borderRadius: const BorderRadius.vertical(top: Radius.circular(8)),
-                                    child: Image.network(
-                                      imageUrl,
-                                      width: double.infinity,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
+                                  child: Stack(
                                     children: [
-                                      Text(
-                                        title,
-                                        style: const TextStyle(fontWeight: FontWeight.w500),
+                                      // Image
+                                      ClipRRect(
+                                        borderRadius: const BorderRadius.vertical(
+                                          top: Radius.circular(8),
+                                        ),
+                                        child: Image.network(
+                                          imageUrl,
+                                          width: double.infinity,
+                                          height: double.infinity,
+                                          fit: BoxFit.cover,
+                                        ),
                                       ),
-                                      const SizedBox(height: 4),
-                                      Text(
-                                        '₹$price',
-                                        style: const TextStyle(fontWeight: FontWeight.bold),
+                                      // Gradient overlay (optional - for better text visibility)
+                                      Positioned(
+                                        bottom: 0,
+                                        left: 0,
+                                        right: 0,
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            gradient: LinearGradient(
+                                              begin: Alignment.bottomCenter,
+                                              end: Alignment.topCenter,
+                                              colors: [
+                                                Colors.black.withOpacity(0.7),
+                                                Colors.transparent,
+                                              ],
+                                            ),
+                                          ),
+                                          padding: const EdgeInsets.all(12),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Text(
+                                                title,
+                                                style: const TextStyle(
+                                                  fontWeight: FontWeight.w600,
+                                                  color: Colors.white,
+                                                  fontSize: 14,
+                                                ),
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                              const SizedBox(height: 4),
+                                              Text(
+                                                '₹$price',
+                                                style: const TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.amber,
+                                                  fontSize: 16,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -210,7 +254,6 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
         ),
-
       ),
     );
   }

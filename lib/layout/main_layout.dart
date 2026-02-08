@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:jewellery/cart.dart';
+import 'package:jewellery/profile.dart';
+import 'package:jewellery/wishlist.dart';
 import '../layout/nav_bar_delegate.dart';
 import '../pages/home_page.dart';
 import 'package:flutter/cupertino.dart';
@@ -97,12 +100,39 @@ class _MainLayoutState extends State<MainLayout> {
                       Positioned(
                         right: 0,
                         child: Row(
-                          children: const [
-                            Icon(CupertinoIcons.map_pin, size: 22),
-                            SizedBox(width: 10), // Reduced spacing
-                            Icon(CupertinoIcons.person, size: 22),
-                            SizedBox(width: 10),
-                            Icon(CupertinoIcons.bag, size: 22),
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                // 📍 Location action
+                                debugPrint('Location icon pressed');
+                              },
+                              child: const Icon(CupertinoIcons.map_pin, size: 22),
+                            ),
+                            const SizedBox(width: 10),
+
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(context, MaterialPageRoute(builder: (_) => ProfilePage()));
+                              },
+                              child: const Icon(CupertinoIcons.person, size: 22),
+                            ),
+                            const SizedBox(width: 10),
+
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(context, MaterialPageRoute(builder: (_) => WishlistPage()));
+                              },
+                              child: const Icon(CupertinoIcons.heart, size: 22),
+                            ),
+                            const SizedBox(width: 10),
+
+                            InkWell(
+                              onTap: () {
+
+                                Navigator.push(context, MaterialPageRoute(builder: (_) => CartPage()));
+                              },
+                              child: const Icon(CupertinoIcons.bag, size: 22),
+                            ),
                           ],
                         ),
                       ),

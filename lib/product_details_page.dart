@@ -1,12 +1,145 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:jewellery/web_footer.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProductDetailsPage extends StatelessWidget {
   final Map<String, dynamic> product;
 
   const ProductDetailsPage({super.key, required this.product});
 
-  @override
+  Future<void> addToCart(BuildContext context) async {
+    final url = Uri.parse(
+      'https://jewellery-backend-icja.onrender.com/api/cart/add',
+    );
+
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('auth_token');
+
+    print('🟡 TOKEN FROM STORAGE: $token');
+    print('🟡 PRODUCT ID: ${product['_id']}');
+
+    if (token == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please login first'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+
+    try {
+      final response = await http.post(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token', // ✅ FIX
+        },
+        body: jsonEncode({
+          'productId': product['_id'],
+          'quantity': 1,
+        }),
+      );
+
+      print('🟢 STATUS CODE: ${response.statusCode}');
+      print('🟢 RESPONSE BODY: ${response.body}');
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final data = jsonDecode(response.body);
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(data['message']),
+            backgroundColor: Colors.green,
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Failed: ${response.body}'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } catch (e) {
+      print('❌ ERROR: $e');
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Error: $e'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
+
+  Future<void> addToWishlist(BuildContext context) async {
+    final url = Uri.parse(
+      'https://jewellery-backend-icja.onrender.com/api/wishlist',
+    );
+
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('auth_token');
+
+    print('🟡 TOKEN FROM STORAGE: $token');
+    print('🟡 PRODUCT ID: ${product['_id']}');
+
+    if (token == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please login first'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+
+    try {
+      final response = await http.post(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token', // ✅ REQUIRED
+        },
+        body: jsonEncode({
+          'productId': product['_id'], // ✅ BODY AS PER API
+        }),
+      );
+
+      print('🟢 STATUS CODE: ${response.statusCode}');
+      print('🟢 RESPONSE BODY: ${response.body}');
+
+      final data = jsonDecode(response.body);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(data['message']),
+            backgroundColor: Colors.green,
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(data['message'] ?? 'Wishlist failed'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } catch (e) {
+      print('❌ ERROR: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Error: $e'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
+
+      @override
   Widget build(BuildContext context) {
     final imageUrl = product['image']?['url'] ??
         'https://via.placeholder.com/150';
@@ -47,6 +180,7 @@ class ProductDetailsPage extends StatelessWidget {
                 const SizedBox(height: 20),
                 // Details
                 _buildProductDetails(
+                  context,
                   title,
                   price,
                   category,
@@ -79,6 +213,7 @@ class ProductDetailsPage extends StatelessWidget {
                 Expanded(
                   flex: 1,
                   child: _buildProductDetails(
+                    context,
                     title,
                     price,
                     category,
@@ -100,6 +235,7 @@ class ProductDetailsPage extends StatelessWidget {
   }
 
   Widget _buildProductDetails(
+      BuildContext context,
       String title,
       int price,
       String category,
@@ -157,7 +293,6 @@ class ProductDetailsPage extends StatelessWidget {
         ),
         const SizedBox(height: 12),
 
-        // Gram, Quantity, Availability
         Wrap(
           spacing: 20,
           runSpacing: 8,
@@ -219,7 +354,7 @@ class ProductDetailsPage extends StatelessWidget {
             Expanded(
               child: ElevatedButton.icon(
                 onPressed: () {
-                  // Add to Cart action
+                  addToCart(context);
                 },
                 icon: const Icon(Icons.shopping_cart),
                 label: const Text('ADD TO CART'),
@@ -240,8 +375,8 @@ class ProductDetailsPage extends StatelessWidget {
             const SizedBox(width: 16),
             Expanded(
               child: OutlinedButton.icon(
-                onPressed: () {
-                  // Wishlist action
+                  onPressed: () {
+                    addToWishlist(context);
                 },
                 icon: const Icon(Icons.favorite_border),
                 label: const Text('WISHLIST'),

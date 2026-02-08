@@ -14,7 +14,7 @@ class HomeSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: height,
-      color: Colors.grey.shade300,
+      color: Colors.white,
       alignment: Alignment.center,
       child: Text(
         title,

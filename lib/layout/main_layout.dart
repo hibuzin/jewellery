@@ -25,6 +25,7 @@ class _MainLayoutState extends State<MainLayout> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: NestedScrollView(
         headerSliverBuilder: (_, __) {
           return [
@@ -46,6 +47,7 @@ class _MainLayoutState extends State<MainLayout> {
             ),
 
             // LUXURY ORNAMENTS HEADER
+            // LUXURY ORNAMENTS HEADER
             SliverToBoxAdapter(
               child: InkWell(
                 onTap: () {
@@ -57,7 +59,7 @@ class _MainLayoutState extends State<MainLayout> {
                 child: Container(
                   width: double.infinity,
                   padding: const EdgeInsets.symmetric(
-                      vertical: 20, horizontal: 16),
+                      vertical: 10, horizontal: 14), // Reduced vertical padding
                   color: Colors.white,
                   child: Stack(
                     alignment: Alignment.center,
@@ -66,9 +68,9 @@ class _MainLayoutState extends State<MainLayout> {
                       const Text(
                         'LUXURY ORNAMENTS',
                         style: TextStyle(
-                          fontSize: 28,
+                          fontSize: 26,       // Slightly smaller if needed
                           fontWeight: FontWeight.bold,
-                          letterSpacing: 2,
+                          letterSpacing: 1.5, // Reduced letter spacing
                         ),
                       ),
 
@@ -79,12 +81,9 @@ class _MainLayoutState extends State<MainLayout> {
                           value: selectedCurrency,
                           underline: const SizedBox(),
                           items: const [
-                            DropdownMenuItem(
-                                value: 'INR', child: Text('₹ INR')),
-                            DropdownMenuItem(
-                                value: 'USD', child: Text('\$ USD')),
-                            DropdownMenuItem(
-                                value: 'EUR', child: Text('€ EUR')),
+                            DropdownMenuItem(value: 'INR', child: Text('₹ INR')),
+                            DropdownMenuItem(value: 'USD', child: Text('\$ USD')),
+                            DropdownMenuItem(value: 'EUR', child: Text('€ EUR')),
                           ],
                           onChanged: (value) {
                             setState(() {
@@ -97,15 +96,15 @@ class _MainLayoutState extends State<MainLayout> {
                       // 🔹 Right Icons
                       Positioned(
                         right: 0,
-                        child:Row(
+                        child: Row(
                           children: const [
                             Icon(CupertinoIcons.map_pin, size: 22),
-                            SizedBox(width: 14),
+                            SizedBox(width: 10), // Reduced spacing
                             Icon(CupertinoIcons.person, size: 22),
-                            SizedBox(width: 14),
+                            SizedBox(width: 10),
                             Icon(CupertinoIcons.bag, size: 22),
                           ],
-                        )
+                        ),
                       ),
                     ],
                   ),
@@ -113,7 +112,6 @@ class _MainLayoutState extends State<MainLayout> {
               ),
             ),
 
-            // NAV BAR
             SliverPersistentHeader(
               pinned: true,
               delegate: NavBarDelegate(isMobile: widget.isMobile),

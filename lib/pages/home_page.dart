@@ -57,6 +57,8 @@ class _HomePageState extends State<HomePage> {
 
     final List<String> adImages = [
       'assets/advertisement/img_2.png',
+      'assets/advertisement/img_3.png',
+      'assets/advertisement/img_4.png',
     ];
 
     final crossAxisCount = isMobile ? 2 : 4;

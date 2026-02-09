@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:jewellery/address.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CartPage extends StatefulWidget {
@@ -424,7 +425,10 @@ class _CartPageState extends State<CartPage> {
                     ],
                   ),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context)=>CreateAddressPage()));
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFFD4AF37),
                       foregroundColor: Colors.white,

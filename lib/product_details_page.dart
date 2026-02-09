@@ -346,9 +346,6 @@ class ProductDetailsPage extends StatelessWidget {
 
         const SizedBox(height: 24),
 
-        // ✅ Add to Cart & Wishlist Buttons
-        const SizedBox(height: 28), // konjam kizha thallum
-
         Row(
           children: [
             Expanded(

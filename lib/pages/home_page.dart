@@ -98,7 +98,7 @@ class _HomePageState extends State<HomePage> {
                           borderRadius: BorderRadius.circular(1),
                           image: DecorationImage(
                             image: AssetImage(imagePath),
-                            fit: isMobile ? BoxFit.fitHeight : BoxFit.cover,
+                            fit: isMobile ? BoxFit.cover : BoxFit.cover,
                           ),
                           boxShadow: [
                             BoxShadow(

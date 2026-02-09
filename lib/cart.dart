@@ -173,7 +173,6 @@ class _CartPageState extends State<CartPage> {
                   itemBuilder: (context, index) {
                     final item = cartItems[index];
                     final product = item['product'];
-
                     if (product == null) {
                       return const SizedBox();
                     }
@@ -426,8 +425,37 @@ class _CartPageState extends State<CartPage> {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context)=>CreateAddressPage()));
+                      if (cartItems.isEmpty) return;
+
+                      final firstItem = cartItems.firstWhere(
+                            (item) => item['product'] != null,
+                        orElse: () => null,
+                      );
+
+                      if (firstItem == null) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Invalid cart item')),
+                        );
+                        return;
+                      }
+
+                      final product = firstItem['product'];
+
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => CreateAddressPage(
+                            product: {
+                              'productId': product['_id'],
+                              'productName': product['title'],
+                              'price': product['price'],
+                              'imageUrl': product['image']['url'],
+                              'gram': product['gram'],
+                              'quantity': firstItem['quantity'],
+                            },
+                          ),
+                        ),
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFFD4AF37),

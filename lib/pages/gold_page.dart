@@ -12,9 +12,7 @@ class GoldPage extends StatelessWidget {
 
     // Slider images for Gold Collection
     final List<String> adImages = [
-      'assets/advertisement/Banner1.png',
-      'assets/advertisement/Banner2.png',
-      'assets/advertisement/Banner3.png',
+      'assets/advertisement/img_2.png',
     ];
 
     return Scaffold(

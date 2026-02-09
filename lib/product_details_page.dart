@@ -259,71 +259,53 @@ class ProductDetailsPage extends StatelessWidget {
         const SizedBox(height: 10),
 
         // Price
-        Text(
-          '₹$price',
-          style: const TextStyle(
-            fontSize: 18,
-            color: Colors.amber,
-          ),
-        ),
-        const SizedBox(height: 12),
-
-        // Category & Subcategory
-        Wrap(
-          spacing: 20,
-          runSpacing: 8,
+        Row(
           children: [
             Text(
-              category,
+              '₹$price',
               style: const TextStyle(
-                fontSize: 16,
-                color: Colors.black54,
-                fontWeight: FontWeight.w500,
+                fontSize: 18,
+                color: Colors.amber,
               ),
             ),
+            const SizedBox(width: 20),
             Text(
-              subcategory,
+              '$category : $subcategory',
               style: const TextStyle(
                 fontSize: 16,
-                color: Colors.black54,
-                fontWeight: FontWeight.w500,
+                color: Colors.black87,
               ),
             ),
-          ],
-        ),
-        const SizedBox(height: 12),
-
-        Wrap(
-          spacing: 20,
-          runSpacing: 8,
-          children: [
+            const SizedBox(width: 20),
             Text(
               'Gram: $gram g',
               style: const TextStyle(
-                fontSize: 16,
+                fontSize: 15,
                 color: Colors.black54,
               ),
             ),
+            const SizedBox(width: 20),
             Text(
               'Qty: $quantity',
               style: const TextStyle(
-                fontSize: 16,
+                fontSize: 15,
                 color: Colors.black54,
               ),
             ),
+            const SizedBox(width: 20),
             Text(
-              isAvailable ? 'Available' : 'Out of Stock',
+              isAvailable ? 'In Stock' : 'Out of Stock',
               style: TextStyle(
-                fontSize: 16,
+                fontSize: 15,
                 color: isAvailable ? Colors.green : Colors.redAccent,
                 fontWeight: FontWeight.w600,
               ),
             ),
           ],
         ),
-        const SizedBox(height: 24),
 
-        // Description
+        const SizedBox(height: 15),
+
         const Text(
           'DESCRIPTION',
           style: TextStyle(
@@ -393,7 +375,79 @@ class ProductDetailsPage extends StatelessWidget {
             ),
           ],
         ),
+        const SizedBox(height: 20),
+
+// 🔹 Extra Perks Container
+    Container(
+    padding: const EdgeInsets.all(16),
+    decoration: BoxDecoration(
+    color: Colors.grey.shade100,
+    borderRadius: BorderRadius.circular(12),
+    boxShadow: [
+    BoxShadow(
+    color: Colors.black.withOpacity(0.05),
+    blurRadius: 8,
+    offset: const Offset(0, 2),
+    ),
+    ],
+    ),
+    child: Row(
+    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+    _perkItem(
+    icon: Icons.autorenew,
+    title: 'Easy Returns',
+    description: 'Hassle-free returns within 15 days for your peace of mind.',
+    ),
+    SizedBox(width: 5,),
+    _perkItem(
+    icon: Icons.lock,
+    title: 'Secure Payment',
+    description: 'Your payment information is encrypted and protected.',
+    ),
+      SizedBox(width: 5,),
+    _perkItem(
+    icon: Icons.local_shipping,
+    title: 'Fast Delivery',
+    description: 'Quick and reliable delivery straight to your doorstep.',
+    ),
+      SizedBox(width: 5,),
+    _perkItem(
+    icon: Icons.card_giftcard,
+    title: 'Gift Wrapping',
+    description: 'Beautiful gift packaging for every occasion.',
+    ),
+    ],
+    )
+    )
       ],
     );
   }
+}
+
+Widget _perkItem({required IconData icon, required String title, required String description}) {
+  return Flexible( // ✅ allows the item to grow/shrink
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Icon(icon, size: 36, color: const Color(0xFFD4AF37)), // slightly bigger icon
+        const SizedBox(height: 10),
+        Text(
+          title,
+          style: const TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.bold,
+          ),
+          textAlign: TextAlign.center,
+        ),
+        const SizedBox(height: 6),
+        Text(
+          description,
+          style: const TextStyle(fontSize: 12, color: Colors.black54, height: 1.4),
+          textAlign: TextAlign.center,
+        ),
+      ],
+    ),
+  );
 }

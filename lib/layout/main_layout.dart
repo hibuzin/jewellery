@@ -49,8 +49,6 @@ class _MainLayoutState extends State<MainLayout> {
               ),
             ),
 
-            // LUXURY ORNAMENTS HEADER
-            // LUXURY ORNAMENTS HEADER
             SliverToBoxAdapter(
               child: InkWell(
                 onTap: () {
@@ -69,7 +67,7 @@ class _MainLayoutState extends State<MainLayout> {
                     children: [
                       // 🔹 Center Text
                       const Text(
-                        'LUXURY ORNAMENTS',
+                        'LUXURY GOLDS',
                         style: TextStyle(
                           fontSize: 26,       // Slightly smaller if needed
                           fontWeight: FontWeight.bold,
@@ -78,21 +76,51 @@ class _MainLayoutState extends State<MainLayout> {
                       ),
 
                       // 🔹 Left Currency Selector
+                      // 🔹 Currency + Need Help with Icon
                       Positioned(
                         left: 0,
-                        child: DropdownButton<String>(
-                          value: selectedCurrency,
-                          underline: const SizedBox(),
-                          items: const [
-                            DropdownMenuItem(value: 'INR', child: Text('₹ INR')),
-                            DropdownMenuItem(value: 'USD', child: Text('\$ USD')),
-                            DropdownMenuItem(value: 'EUR', child: Text('€ EUR')),
+                        child: Row(
+                          children: [
+                            DropdownButton<String>(
+                              value: selectedCurrency,
+                              underline: const SizedBox(),
+                              items: const [
+                                DropdownMenuItem(value: 'INR', child: Text('₹ INR')),
+                                DropdownMenuItem(value: 'USD', child: Text('\$ USD')),
+                                DropdownMenuItem(value: 'EUR', child: Text('€ EUR')),
+                              ],
+                              onChanged: (value) {
+                                setState(() {
+                                  selectedCurrency = value!;
+                                });
+                              },
+                            ),
+                            const SizedBox(width: 12), // spacing
+                            InkWell(
+                              onTap: () {
+                                debugPrint('Need Help pressed');
+                                // Navigate to support page or open chat
+                              },
+                              child: Row(
+                                children: const [
+                                  Icon(
+                                    Icons.support_agent,
+                                    size: 18,
+                                    color: Colors.black,
+                                  ),
+                                  SizedBox(width: 4),
+                                  Text(
+                                    'NEED HELP?',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ],
-                          onChanged: (value) {
-                            setState(() {
-                              selectedCurrency = value!;
-                            });
-                          },
                         ),
                       ),
 

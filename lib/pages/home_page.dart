@@ -57,8 +57,16 @@ class _HomePageState extends State<HomePage> {
 
     final List<String> adImages = [
       'assets/advertisement/img_2.png',
-      'assets/advertisement/img_3.png',
-      'assets/advertisement/img_4.png',
+      'assets/advertisement/img_8.png',
+      'assets/advertisement/img_9.png',
+      'assets/advertisement/img_10.png',
+
+    ];
+    final List<String> bottomImages = [
+      'assets/advertisement/img_7.png',
+      'assets/advertisement/img_2.png',
+      'assets/advertisement/img_8.png',
+      'assets/advertisement/img_9.png',
     ];
 
     final crossAxisCount = isMobile ? 2 : 4;
@@ -74,6 +82,7 @@ class _HomePageState extends State<HomePage> {
               // Carousel Slider
               CarouselSlider(
                 options: CarouselOptions(
+                  height: 450,
                   autoPlay: true,
                   enlargeCenterPage: false,
                   viewportFraction: 1.0,
@@ -104,11 +113,58 @@ class _HomePageState extends State<HomePage> {
               ),
               const SizedBox(height: 35),
 
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal, // ensures single row scrolls on small screens
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      _featureItem(
+                        icon: Icons.diamond,
+                        title: 'Premium Diamonds',
+                        description:
+                        'Our diamonds are certified and sourced from trusted suppliers. Every stone is hand-selected for clarity, cut, and brilliance to ensure exceptional quality for your special moments.',
+                      ),
+                      _featureItem(
+                        icon: Icons.workspace_premium,
+                        title: 'Gold Jewelry',
+                        description:
+                        'We offer 24k pure gold jewelry crafted by master artisans. Each piece is designed to capture elegance and luxury, perfect for gifts and celebrations.',
+                      ),
+                      _featureItem(
+                        icon: Icons.favorite,
+                        title: 'Gemstones',
+                        description:
+                        'Rare and precious gemstones carefully curated for their color and clarity. Our collection includes rubies, emeralds, sapphires, and more, each telling a unique story.',
+                      ),
+                      _featureItem(
+                        icon: Icons.local_shipping,
+                        title: 'Fast Delivery',
+                        description:
+                        'Safe and reliable shipping to your doorstep. Track your order in real time, ensuring your precious jewelry arrives securely and on time.',
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              // Centered short divider
+              Center(
+                child: Container(
+                  width: 500, // your desired width
+                  child: const Divider(
+                    height: 30, // space around divider
+                    color: Colors.grey, // divider color
+                    thickness: 2, // thickness of the line
+                  ),
+                ),
+              ),
               // Products Section
               Padding(
                 padding: EdgeInsets.symmetric(
                   horizontal: isMobile ? 16 : 30,
-                  vertical: 40,
+                  vertical: 15,
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -145,9 +201,7 @@ class _HomePageState extends State<HomePage> {
                   mainAxisSpacing: 50,
                   childAspectRatio: 0.85,
                 ),
-                itemCount: _products.length > maxItems
-                    ? maxItems
-                    : _products.length,
+                      itemCount: _products.length, // show all products
                 itemBuilder: (context, index) {
                   final product = _products[index];
                         final imageUrl = product['image']?['url'] ??
@@ -248,6 +302,30 @@ class _HomePageState extends State<HomePage> {
                         );
                       },
                     ),
+
+                    const SizedBox(height: 30), // spacing from products
+
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+                      child: SizedBox(
+                        height: 320, // adjust based on image height
+                        child: GridView.count(
+                          crossAxisCount: 2, // 2 images per row
+                          crossAxisSpacing: 16,
+                          mainAxisSpacing: 16,
+                          physics: const NeverScrollableScrollPhysics(), // disables scroll
+                          children: bottomImages.map((img) {
+                            return ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child: Image.asset(
+                                img,
+                                fit: BoxFit.cover,
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -259,4 +337,42 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+}
+
+// 🔹 Jewelry Features Row
+
+// 🔹 Feature item widget
+Widget _featureItem({required IconData icon, required String title, required String description}) {
+return Container(
+  width: 150,
+margin: const EdgeInsets.symmetric(horizontal: 12),
+child: Column(
+mainAxisSize: MainAxisSize.min,
+children: [
+Icon(
+icon,
+size: 50,
+color: const Color(0xFFD4AF37), // gold color
+),
+const SizedBox(height: 12),
+Text(
+title,
+style: const TextStyle(
+fontSize: 16,
+fontWeight: FontWeight.bold,
+),
+textAlign: TextAlign.center,
+),
+const SizedBox(height: 8),
+Text(
+description,
+style: const TextStyle(
+fontSize: 12,
+color: Colors.grey,
+),
+textAlign: TextAlign.center,
+),
+],
+),
+);
 }

@@ -21,17 +21,24 @@ class NavBarDelegate extends SliverPersistentHeaderDelegate {
     return Container(
       color: Colors.white,
       alignment: Alignment.center,
-      child: SizedBox(
-        width: isMobile ? double.infinity : 600,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            _item(context, 'HOME', const HomePage()),
-            _item(context, 'DIAMOND', const DiamondPage()),
-            _item(context, 'GOLD', const GoldPage()),
-            _item(context, 'GEMSTONE', const GemstonePage()),
-            _item(context, 'WEDDING RING', const WeddingRingPage()),
-          ],
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        physics: const BouncingScrollPhysics(),
+        child: Center( // 👈 Center the row inside the scrollable
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _item(context, 'HOME', const HomePage()),
+              _item(context, 'GOLD', const GoldPage()),
+              _item(context, 'GEMSTONE', const GemstonePage()),
+              _item(context, 'WEDDING RING', const WeddingRingPage()),
+              _item(context, 'PLATINUM', const GoldPage()),
+              _item(context, 'ROSE GOLD', const GoldPage()),
+              _item(context, 'RING', const GoldPage()),
+              _item(context, '24CRT', const GoldPage()),
+              _item(context, 'DIAMOND', const DiamondPage()),
+            ],
+          ),
         ),
       ),
     );

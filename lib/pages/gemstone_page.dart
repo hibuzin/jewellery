@@ -12,9 +12,7 @@ class GemstonePage extends StatelessWidget {
 
     // List of asset images for the slider
     final List<String> adImages = [
-      'assets/advertisement/Banner1.png',
-      'assets/advertisement/Banner2.png',
-      'assets/advertisement/Banner3.png',
+      'assets/advertisement/img_1.png',
     ];
 
     return Scaffold(

@@ -96,34 +96,11 @@ class _MainLayoutState extends State<MainLayout> {
                               },
                             ),
                             const SizedBox(width: 12), // spacing
-                            InkWell(
-                              onTap: () {
-                                debugPrint('Need Help pressed');
-                                // Navigate to support page or open chat
-                              },
-                              child: Row(
-                                children: const [
-                                  Icon(
-                                    Icons.support_agent,
-                                    size: 18,
-                                    color: Colors.black,
-                                  ),
-                                  SizedBox(width: 4),
-                                  Text(
-                                    'NEED HELP?',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
                           ],
                         ),
                       ),
 
+                      // 🔹 Right Icons
                       // 🔹 Right Icons
                       Positioned(
                         right: 0,
@@ -131,35 +108,49 @@ class _MainLayoutState extends State<MainLayout> {
                           children: [
                             InkWell(
                               onTap: () {
-                                // 📍 Location action
                                 debugPrint('Location icon pressed');
                               },
-                              child: const Icon(CupertinoIcons.map_pin, size: 22),
+                              child: Icon(
+                                widget.isMobile ? CupertinoIcons.map_pin : CupertinoIcons.map_pin,
+                                size: widget.isMobile ? 18 : 22, // smaller on mobile
+                                color: Colors.black,
+                              ),
                             ),
-                            const SizedBox(width: 10),
+                            SizedBox(width: widget.isMobile ? 6 : 10), // smaller spacing on mobile
 
                             InkWell(
                               onTap: () {
                                 Navigator.push(context, MaterialPageRoute(builder: (_) => ProfilePage()));
                               },
-                              child: const Icon(CupertinoIcons.person, size: 22),
+                              child: Icon(
+                                widget.isMobile ?  CupertinoIcons.person : CupertinoIcons.person,
+                                size: widget.isMobile ? 18 : 22,
+                                color: Colors.black,
+                              ),
                             ),
-                            const SizedBox(width: 10),
+                            SizedBox(width: widget.isMobile ? 6 : 10),
 
                             InkWell(
                               onTap: () {
                                 Navigator.push(context, MaterialPageRoute(builder: (_) => WishlistPage()));
                               },
-                              child: const Icon(CupertinoIcons.heart, size: 22),
+                              child: Icon(
+                                widget.isMobile ? CupertinoIcons.heart : CupertinoIcons.heart,
+                                size: widget.isMobile ? 18 : 22,
+                                color: Colors.black,
+                              ),
                             ),
-                            const SizedBox(width: 10),
+                            SizedBox(width: widget.isMobile ? 6 : 10),
 
                             InkWell(
                               onTap: () {
-
                                 Navigator.push(context, MaterialPageRoute(builder: (_) => CartPage()));
                               },
-                              child: const Icon(CupertinoIcons.bag, size: 22),
+                              child: Icon(
+                                widget.isMobile ? CupertinoIcons.bag : CupertinoIcons.bag,
+                                size: widget.isMobile ? 18 : 22,
+                                color: Colors.black,
+                              ),
                             ),
                           ],
                         ),

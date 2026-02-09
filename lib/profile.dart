@@ -9,7 +9,8 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Logout')),
+      backgroundColor: Colors.white,
+      appBar: AppBar(title: const Text('LOGIN'),backgroundColor: Colors.white,),
       body: Center(
         child: SizedBox(
           width: 200,
@@ -19,11 +20,11 @@ class ProfilePage extends StatelessWidget {
               Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginPage()));
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.redAccent,
+              backgroundColor: Colors.black,
             ),
             child: const Text(
-              'LOGOUT',
-              style: TextStyle(fontSize: 18),
+              'LOGIN',
+              style: TextStyle(fontSize: 18,color: Colors.white),
             ),
           ),
         ),

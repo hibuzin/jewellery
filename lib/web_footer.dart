@@ -12,22 +12,22 @@ class WebFooter extends StatelessWidget {
       width: double.infinity,
       color: Colors.grey.shade900,
       padding: EdgeInsets.symmetric(
-        vertical: isMobile ? 40 : 60,
-        horizontal: isMobile ? 20 : 80,
+        vertical: isMobile ? 20 : 60, // reduced mobile vertical padding
+        horizontal: isMobile ? 16 : 80,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Footer sections - Mobile-la Column, Web-la Row
+          // Footer sections - Mobile: Column, Web: Row
           isMobile
               ? Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildAboutSection(),
-              const SizedBox(height: 30),
-              _buildQuickLinksSection(),
-              const SizedBox(height: 30),
-              _buildContactSection(),
+              _buildAboutSection(isMobile: true),
+              const SizedBox(height: 16), // reduced spacing
+              _buildQuickLinksSection(isMobile: true),
+              const SizedBox(height: 16),
+              _buildContactSection(isMobile: true),
             ],
           )
               : Row(
@@ -42,7 +42,7 @@ class WebFooter extends StatelessWidget {
             ],
           ),
 
-          SizedBox(height: isMobile ? 30 : 40),
+          SizedBox(height: isMobile ? 16 : 40),
 
           // Copyright
           Center(
@@ -50,7 +50,7 @@ class WebFooter extends StatelessWidget {
               '© 2026 Jewellery Store. All Rights Reserved.',
               style: TextStyle(
                 color: Colors.white54,
-                fontSize: isMobile ? 12 : 14,
+                fontSize: isMobile ? 11 : 14, // smaller on mobile
               ),
               textAlign: TextAlign.center,
             ),
@@ -60,80 +60,70 @@ class WebFooter extends StatelessWidget {
     );
   }
 
-  Widget _buildAboutSection() {
+  Widget _buildAboutSection({bool isMobile = false}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: const [
+      children: [
         Text(
           'About Us',
           style: TextStyle(
             color: Colors.white,
-            fontSize: 16,
+            fontSize: isMobile ? 14 : 16,
             fontWeight: FontWeight.bold,
           ),
         ),
-        SizedBox(height: 12),
-        Text('Company Info', style: TextStyle(color: Colors.white70)),
-        SizedBox(height: 6),
-        Text('Careers', style: TextStyle(color: Colors.white70)),
-        SizedBox(height: 6),
-        Text('Press', style: TextStyle(color: Colors.white70)),
+        const SizedBox(height: 8),
+        Text('Company Info', style: TextStyle(color: Colors.white70, fontSize: isMobile ? 12 : 14)),
+        const SizedBox(height: 4),
+        Text('Careers', style: TextStyle(color: Colors.white70, fontSize: isMobile ? 12 : 14)),
+        const SizedBox(height: 4),
+        Text('Press', style: TextStyle(color: Colors.white70, fontSize: isMobile ? 12 : 14)),
       ],
     );
   }
 
-  Widget _buildQuickLinksSection() {
+  Widget _buildQuickLinksSection({bool isMobile = false}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: const [
+      children: [
         Text(
           'Quick Links',
           style: TextStyle(
             color: Colors.white,
-            fontSize: 16,
+            fontSize: isMobile ? 14 : 16,
             fontWeight: FontWeight.bold,
           ),
         ),
-        SizedBox(height: 12),
-        Text('Diamond', style: TextStyle(color: Colors.white70)),
-        SizedBox(height: 6),
-        Text('Gold', style: TextStyle(color: Colors.white70)),
-        SizedBox(height: 6),
-        Text('Gemstone', style: TextStyle(color: Colors.white70)),
-        SizedBox(height: 6),
-        Text('Wedding Ring', style: TextStyle(color: Colors.white70)),
+        const SizedBox(height: 8),
+        Text('Diamond', style: TextStyle(color: Colors.white70, fontSize: isMobile ? 12 : 14)),
+        const SizedBox(height: 4),
+        Text('Gold', style: TextStyle(color: Colors.white70, fontSize: isMobile ? 12 : 14)),
+        const SizedBox(height: 4),
+        Text('Gemstone', style: TextStyle(color: Colors.white70, fontSize: isMobile ? 12 : 14)),
+        const SizedBox(height: 4),
+        Text('Wedding Ring', style: TextStyle(color: Colors.white70, fontSize: isMobile ? 12 : 14)),
       ],
     );
   }
 
-  Widget _buildContactSection() {
+  Widget _buildContactSection({bool isMobile = false}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children:  [
-
+      children: [
         Text(
           'Contact Us',
           style: TextStyle(
             color: Colors.white,
-            fontSize: 16,
+            fontSize: isMobile ? 14 : 16,
             fontWeight: FontWeight.bold,
           ),
         ),
-        SizedBox(height: 12),
-        Text(
-          'Email: info@jewellery.com',
-          style: TextStyle(color: Colors.white70),
-        ),
-        SizedBox(height: 6),
-        Text(
-          'Phone: +91 1234567890',
-          style: TextStyle(color: Colors.white70),
-        ),
-        SizedBox(height: 6),
-        Text(
-          'Address: 123 Main Street, India',
-          style: TextStyle(color: Colors.white70),
-        ),
+        const SizedBox(height: 8),
+        Text('Email: info@jewellery.com', style: TextStyle(color: Colors.white70, fontSize: isMobile ? 12 : 14)),
+        const SizedBox(height: 4),
+        Text('Phone: +91 1234567890', style: TextStyle(color: Colors.white70, fontSize: isMobile ? 12 : 14)),
+        const SizedBox(height: 4),
+        Text('Address: 123 Main Street, India', style: TextStyle(color: Colors.white70, fontSize: isMobile ? 12 : 14)),
       ],
     );
   }

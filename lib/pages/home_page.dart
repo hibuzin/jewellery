@@ -53,13 +53,16 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
 
+
     final isMobile = MediaQuery.of(context).size.width < 768;
 
     final List<String> adImages = [
       'assets/advertisement/img_2.png',
-      'assets/advertisement/img_8.png',
-      'assets/advertisement/img_9.png',
-      'assets/advertisement/img_10.png',
+      'assets/advertisement/img_2.png',
+      'assets/advertisement/img_11.png',
+      'assets/advertisement/img_12.png',
+      'assets/advertisement/img_3.png',
+      'assets/advertisement/img_4.png',
 
     ];
     final List<String> bottomImages = [
@@ -71,7 +74,7 @@ class _HomePageState extends State<HomePage> {
 
     final crossAxisCount = isMobile ? 2 : 4;
     final maxItems = crossAxisCount * 2;
-
+    final double carouselHeight = isMobile ? 220 : 450; // smaller height on mobile
     return Scaffold(
       backgroundColor: Colors.white,
       body: MainLayout(
@@ -79,15 +82,14 @@ class _HomePageState extends State<HomePage> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              // Carousel Slider
-              CarouselSlider(
-                options: CarouselOptions(
-                  height: 450,
-                  autoPlay: true,
-                  enlargeCenterPage: false,
-                  viewportFraction: 1.0,
-                  autoPlayInterval: const Duration(seconds: 3),
-                ),
+          CarouselSlider(
+          options: CarouselOptions(
+          height: carouselHeight,
+            autoPlay: true,
+            enlargeCenterPage: false,
+            viewportFraction: 1.0,
+            autoPlayInterval: const Duration(seconds: 3),
+          ),
                 items: adImages.map((imagePath) {
                   return Builder(
                     builder: (BuildContext context) {
@@ -96,7 +98,7 @@ class _HomePageState extends State<HomePage> {
                           borderRadius: BorderRadius.circular(1),
                           image: DecorationImage(
                             image: AssetImage(imagePath),
-                            fit: BoxFit.cover,
+                            fit: isMobile ? BoxFit.fitHeight : BoxFit.cover,
                           ),
                           boxShadow: [
                             BoxShadow(
@@ -301,6 +303,18 @@ class _HomePageState extends State<HomePage> {
                           ),
                         );
                       },
+                    ),
+
+                    const SizedBox(height: 30), // spacing from products
+
+                    const Text(
+                      'DIAMOND',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 1.5,
+                      ),
+                      textAlign: TextAlign.center,
                     ),
 
                     const SizedBox(height: 30), // spacing from products
